@@ -85,6 +85,7 @@ class Usuario{
         return $this;
     }
 
+    //Busca um usuário pelo ID
     public function loadById($id){
     	$sql = new Sql();
     	$results = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario= :ID", array(
@@ -99,6 +100,44 @@ class Usuario{
     	}
     }
 
+    //Traz todos os usuários do banco
+    public static function getList(){
+    	$sql = new Sql();
+
+    	return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin");
+    }
+
+    //traz os usuarios baseados em uma pesquisa
+    public static function search($login){
+    	$sql = new Sql();
+
+    	return $sql->select("SELECT * FROM tb_usuarios where deslogin like :SEARCH ORDER BY deslogin", array(
+    		":SEARCH"=> "%" . $login . "%"
+    	));
+
+    }
+
+    //Verifica se o usuario existe no bando de dados
+    public function login($login, $password){
+    	$sql = new Sql();
+    	$results = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin= :LOGIN AND dessenha= :PASSWORD", array(
+    		":LOGIN"=>$login,
+    		"PASSWORD"=>$password
+    	));
+
+    	if (count($results) > 0) {
+    		$row = $results[0];
+    		//Alimentando a classe
+    		$this->setIdusuario($row['idusuario']);
+    		$this->setDeslogin($row['deslogin']);
+    		$this->setDessenha($row['dessenha']);
+    		$this->setDtcadastro(new DateTime($row['dtucadastro']));
+    	}else{
+    		throw new Exception("Usuário e/ou Senha inválidos");    		
+    	}
+    }
+
+    //Traz os dados formatados de apenas um usuário
     public function __toString(){
     	return json_encode(array(
     		"idusuario"=>$this->getIdusuario(),

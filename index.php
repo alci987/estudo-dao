@@ -12,4 +12,19 @@ $root->loadById(2);
 echo $root->getDtcadastro()->format("d/m/Y H:i:s");
 echo $root;
 
+echo "<hr>";
+
+$lista = Usuario::getList();//Esse é um método estático
+echo json_encode($lista);
+
+echo "<hr>";
+
+$search = Usuario::search("m");
+echo json_encode($search);
+
+echo "<hr>";
+
+$root->login("Ana Mirian","12345");
+echo $root;
+
  ?>
