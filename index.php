@@ -8,7 +8,7 @@ echo json_encode($usuarios);
 echo "<hr>";
 
 $root = new Usuario();
-$root->loadById(2);
+$root->loadById(29);
 echo $root->getDtcadastro()->format("d/m/Y H:i:s");
 echo $root;
 
@@ -24,7 +24,20 @@ echo json_encode($search);
 
 echo "<hr>";
 
-$root->login("Ana Mirian","12345");
+$root->login("Ana Mirian","1234");
 echo $root;
+
+echo "<hr>";
+
+//$aluno = new Usuario("relógio", "picaxu");
+
+
+//$aluno->insert();
+
+//echo $aluno;
+//
+
+$root->loadById(30);
+$root->update("mexi", "mexerica");
 
  ?>
